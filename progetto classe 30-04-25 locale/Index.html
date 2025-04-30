@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Piattaforma Studenti</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">StudentiApp</div>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="registrazione.html">Registrati</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <style>
+               /* Stili per il corpo della pagina */
+               body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header */
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: #16a085;
+        }
+
+        /* Main content */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .page-title {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        /* Stat Cards */
+        .stats-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            flex: 1;
+            text-align: center;
+        }
+
+        .stat-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        th {
+            background-color: #34495e;
+            color: white;
+        }
+
+        td {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover td {
+            background-color: #ecf0f1;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .modal-body {
+            margin-bottom: 25px;
+            color: #555;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn-cancel, .btn-confirm {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-cancel {
+            background-color: #95a5a6;
+            color: white;
+        }
+
+        .btn-cancel:hover {
+            background-color: #7f8c8d;
+        }
+
+        .btn-confirm {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .btn-confirm:hover {
+            background-color: #c0392b;
+        }
+
+        /* Empty list */
+        .empty-list {
+            text-align: center;
+            margin-top: 40px;
+            color: #7f8c8d;
+        }
+
+        .empty-list i {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        .register-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 16px;
+            text-decoration: none;
+            color: white;
+            background-color: #16a085;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .register-btn:hover {
+            background-color: #1abc9c;
+        }
+
+    </style>
+
+        <!-- Statistiche -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <div class="stat-value" id="totalStudents">0</div>
+                <div class="stat-label">Studenti Totali</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="stat-value" id="totalCourses">0</div>
+                <div class="stat-label">Corsi Attivi</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="stat-value" id="avgAge">0</div>
+                <div class="stat-label">Età Media</div>
+            </div>
+        </div>
+
+        <div class="student-list">
+            <div class="student-list-header">
+                <div class="student-list-title">Lista Studenti</div>
+                <div class="student-count" id="studentCount">0 studenti</div>
+            </div>
+            <div id="studentTableContainer">
+                <table id="studentTable">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Cognome</th>
+                            <th>Data di Nascita</th>
+                            <th>Email</th>
+                            <th>Corso</th>
+                            <th>Azioni</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentTableBody">
+                        <!-- Contenuto dinamico qui -->
+                    </tbody>
+                </table>
+                <div id="emptyList" class="empty-list">
+                    <div class="empty-icon">
+                        <i class="fas fa-user-slash"></i>
+                    </div>
+                    <p>Nessuno studente registrato.</p>
+                    <a href="Registrazione.html" class="register-btn">Registra Studente</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal di conferma eliminazione -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div class="modal-title">Conferma Eliminazione</div>
+            </div>
+            <div class="modal-body">
+                Sei sicuro di voler eliminare questo studente?<br>
+                Questa azione non può essere annullata.
+            </div>
+            <div class="modal-buttons">
+                <button id="cancelDelete" class="btn-cancel">Annulla</button>
+                <button id="confirmDelete" class="btn-confirm">Elimina</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 StudentiApp - Piattaforma di Gestione Studenti</p>
+        </div>
+    </footer>
+
+    <!-- Script Chart.js per la grafica -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script>
+        // Funzione per ottenere gli studenti dalla localStorage
+        function getStudents() {
+            const students = localStorage.getItem('students');
+            return students ? JSON.parse(students) : [];
+        }
+
+        // Funzione per salvare gli studenti nella localStorage
+        function saveStudents(students) {
+            localStorage.setItem('students', JSON.stringify(students));
+        }
+
+        // Funzione per calcolare l'età data una data di nascita
+        function calculateAge(birthDate) {
+            const birth = new Date(birthDate);
+            const now = new Date();
+            let age = now.getFullYear() - birth.getFullYear();
+            const monthDiff = now.getMonth() - birth.getMonth();
+            
+            if (monthDiff < 0 || (monthDiff === 0 && now.getDate() < birth.getDate())) {
+                age--;
+            }
+            
+            return age;
+        }
+
+        // Funzione per ottenere la media delle età
+        function getAverageAge(students) {
+            if (students.length === 0) return 0;
+            
+            const totalAge = students.reduce((sum, student) => {
+                return sum + calculateAge(student.birth);
+            }, 0);
+            
+            return Math.round(totalAge / students.length);
+        }
+
+        // Funzione per ottenere i corsi unici
+        function getUniqueCourses(students) {
+            const courses = new Set();
+            students.forEach(student => courses.add(student.course));
+            return Array.from(courses);
+        }
+
+        // Funzione per contare gli studenti per corso
+        function countStudentsByCourse(students) {
+            const courseCounts = {};
+            students.forEach(student => {
+                if (courseCounts[student.course]) {
+                    courseCounts[student.course]++;
+                } else {
+                    courseCounts[student.course] = 1;
+                }
+            });
+            return courseCounts;
+        }
+
+        // Funzione per generare colori casuali
+        function generateColors(count) {
+            const colors = [];
+            for (let i = 0; i < count; i++) {
+                colors.push(`hsl(${(i * 360) / count}, 70%, 60%)`);
+            }
+            return colors;
+        }
+
+        // Funzione per creare il grafico a torta dei corsi
+        function createCourseChart(students) {
+            const courseCounts = countStudentsByCourse(students);
+            const courses = Object.keys(courseCounts);
+            const counts = Object.values(courseCounts);
+            const colors = generateColors(courses.length);
+            
+            const ctx = document.getElementById('courseChart').getContext('2d');
+            
+            if (window.courseChart instanceof Chart && typeof window.courseChart.destroy === 'function') {
+                window.courseChart.destroy();
+            }
+            
+            if (courses.length === 0) {
+                ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+                ctx.font = '20px Arial';
+                ctx.fillStyle = '#777';
+                ctx.textAlign = 'center';
+                ctx.fillText('Nessun dato disponibile', ctx.canvas.width / 2, ctx.canvas.height / 2);
+                return;
+            }
+            
+            window.courseChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: courses,
+                    datasets: [{
+                        data: counts,
+                        backgroundColor: colors,
+                        borderColor: 'white',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.raw;
+                                    const percentage = Math.round((value / counts.reduce((a, b) => a + b, 0)) * 100);
+                                    return `${label}: ${value} studenti (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Funzione per eliminare uno studente
+        function deleteStudent(studentId) {
+            let students = getStudents();
+            students = students.filter(student => student.id !== studentId);
+            saveStudents(students);
+            updateStudentTable(students);
+            createCourseChart(students);
+        }
+
+        // Gestione del modal di conferma eliminazione
+        const modal = document.getElementById('deleteModal');
+        const cancelDelete = document.getElementById('cancelDelete');
+        const confirmDelete = document.getElementById('confirmDelete');
+        let studentToDelete = null;
+
+        // Evento di chiusura del modal quando si preme Annulla
+        cancelDelete.addEventListener('click', function() {
+            modal.style.display = 'none';
+            studentToDelete = null;
+        });
+
+        // Evento di conferma eliminazione
+        confirmDelete.addEventListener('click', function() {
+            if (studentToDelete) {
+                deleteStudent(studentToDelete);
+                modal.style.display = 'none';
+                studentToDelete = null;
+            }
+        });
+
+        // Funzione per mostrare il modal di conferma
+        function showDeleteConfirmation(studentId) {
+            studentToDelete = studentId;
+            modal.style.display = 'flex';
+        }
+
+        // Funzione per aggiornare la tabella degli studenti
+        function updateStudentTable(students) {
+            const tableBody = document.getElementById('studentTableBody');
+            const emptyList = document.getElementById('emptyList');
+            const studentCount = document.getElementById('studentCount');
+            const totalStudents = document.getElementById('totalStudents');
+            const totalCourses = document.getElementById('totalCourses');
+            const avgAge = document.getElementById('avgAge');
+            
+            // Aggiorna contatori
+            studentCount.textContent = `${students.length} studenti`;
+            totalStudents.textContent = students.length;
+            totalCourses.textContent = getUniqueCourses(students).length;
+            avgAge.textContent = getAverageAge(students);
+            
+            // Pulisci la tabella
+            tableBody.innerHTML = '';
+            
+            if (students.length === 0) {
+                emptyList.style.display = 'block';
+                document.getElementById('studentTable').style.display = 'none';
+                return;
+            }
+
+            // Nascondi il messaggio vuoto e mostra la tabella
+            emptyList.style.display = 'none';
+            document.getElementById('studentTable').style.display = 'table';
+
+            // Popola la tabella
+            students.forEach(student => {
+                const row = document.createElement('tr');
+                
+                const nameCell = document.createElement('td');
+                nameCell.textContent = student.name;
+
+                const surnameCell = document.createElement('td');
+                surnameCell.textContent = student.surname;
+
+                const birthCell = document.createElement('td');
+                const birthDate = new Date(student.birth);
+                birthCell.textContent = birthDate.toLocaleDateString('it-IT');
+
+                const emailCell = document.createElement('td');
+                emailCell.textContent = student.email;
+
+                const courseCell = document.createElement('td');
+                courseCell.textContent = student.course;
+
+                // Cella per le azioni (eliminazione)
+                const actionsCell = document.createElement('td');
+                const deleteButton = document.createElement('button');
+                deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
+                deleteButton.className = 'delete-btn';
+                deleteButton.title = 'Elimina studente';
+                deleteButton.addEventListener('click', () => {
+                    showDeleteConfirmation(student.id);
+                });
+
+                actionsCell.appendChild(deleteButton);
+
+                row.appendChild(nameCell);
+                row.appendChild(surnameCell);
+                row.appendChild(birthCell);
+                row.appendChild(emailCell);
+                row.appendChild(courseCell);
+                row.appendChild(actionsCell);
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Inizializzazione della pagina
+        window.onload = function() {
+            const students = getStudents();
+            updateStudentTable(students);
+            createCourseChart(students);
+        };
+    </script>
+</body>
+</html>
